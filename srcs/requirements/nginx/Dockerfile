@@ -12,4 +12,4 @@ RUN chown -R www-data:www-data /var/www/html
 
 COPY conf/default.conf /etc/nginx/conf.d/nginx.conf
 
-ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
+ENTRYPOINT [ "nginx" ]
