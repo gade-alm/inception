@@ -7,9 +7,8 @@ RUN mkdir -p /etc/nginx/ssl
 RUN openssl req -x509 -nodes -out /etc/nginx/ssl/ssl.crt \
 	-keyout /etc/nginx/ssl/ssl.key \
 	-subj "/C=PT/ST=Lisbon/L=Lisbon/ON=42Lisboa/CN=gade-alm.42.fr/"
-RUN chmod 755 /var/www/html
-RUN chown -R www-data:www-data /var/www/html
+
 
 COPY conf/default.conf /etc/nginx/conf.d/nginx.conf
 
-ENTRYPOINT [ "nginx" ]
+ENTRYPOINT [ "nginx", "-g", "daemon off;" ]

@@ -1,13 +1,17 @@
-version: "3.8"
-
+version: '3.8'
 services:
   nginx:
-    build: srcs/requirements/nginx
-  ports:
-    - "443"
+    image: nginx
+    build: ./srcs/requirements/nginx
+    ports:
+    - '443:443'
+    volumes:
+    - /var/www/html
+    restart: on-failure
 
-nginx:
+  maria-db:
+    image: mariadb
+    build: ./srcs/requirements/mariadb
+    env_file:
+      - path: ./.env
 
-wordpress:
-
-mariadb:
