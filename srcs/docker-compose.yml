@@ -1,17 +1,34 @@
-version: '3.8'
+version: "3.8"
 services:
   nginx:
     image: nginx
     build: ./srcs/requirements/nginx
     ports:
-    - '443:443'
+      - "443:443"
     volumes:
-    - /var/www/html
+      - /var/www/html
     restart: on-failure
-
+    networks:
+      - inception
   maria-db:
     image: mariadb
     build: ./srcs/requirements/mariadb
     env_file:
-      - path: ./.env
-
+      - path: ../.env
+    restart: on-failure
+    networks:
+      - inception
+  wordpress:
+    image: wordpress
+    build: ./srcs/requirements/wordpress
+    ports:
+      - "9000:80"
+    env_file:
+      - path: ../.env
+    networks:
+      - inception
+    restart: on-failure
+    volumes:
+      - /var/www/html
+networks:
+  inception:

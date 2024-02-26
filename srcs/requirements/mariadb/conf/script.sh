@@ -1,7 +1,5 @@
 service mariadb start;
 
-echo "MariaDB Database Creation";
-
 sleep 2;
 
 # mysql -u root -e "CREATE DATABASE $DBNAME;"
