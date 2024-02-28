@@ -8,7 +8,10 @@ RUN openssl req -x509 -nodes -out /etc/nginx/ssl/ssl.crt \
 	-keyout /etc/nginx/ssl/ssl.key \
 	-subj "/C=PT/ST=Lisbon/L=Lisbon/ON=42Lisboa/CN=gade-alm.42.fr/"
 
+COPY index.html	/var/www/
 
 COPY conf/default.conf /etc/nginx/conf.d/nginx.conf
 
-ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
+EXPOSE 443
+
+# ENTRYPOINT [ "nginx", "-g", "daemon off;" ]

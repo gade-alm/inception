@@ -14,7 +14,7 @@ services:
     image: mariadb
     build: ./srcs/requirements/mariadb
     env_file:
-      - path: ../.env
+      - path: .env
     restart: on-failure
     networks:
       - inception
@@ -24,7 +24,7 @@ services:
     ports:
       - "9000:80"
     env_file:
-      - path: ../.env
+      - path: .env
     networks:
       - inception
     restart: on-failure
