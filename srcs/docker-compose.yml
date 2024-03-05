@@ -13,8 +13,6 @@ services:
   maria-db:
     image: mariadb
     build: ./srcs/requirements/mariadb
-    env_file:
-      - path: .env
     restart: on-failure
     networks:
       - inception
@@ -23,8 +21,6 @@ services:
     build: ./srcs/requirements/wordpress
     ports:
       - "9000:80"
-    env_file:
-      - path: .env
     networks:
       - inception
     restart: on-failure

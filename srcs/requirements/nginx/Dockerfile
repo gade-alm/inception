@@ -1,17 +1,17 @@
 FROM debian:bullseye
 
-RUN apt-get update && apt-get upgrade -y && apt install -y nginx openssl curl 
+RUN apt-get update && apt-get upgrade -y && apt install -y nginx openssl curl vim
 
 RUN mkdir -p /etc/nginx/ssl
 
-RUN openssl req -x509 -nodes -out /etc/nginx/ssl/ssl.crt \
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -out /etc/nginx/ssl/ssl.crt \
 	-keyout /etc/nginx/ssl/ssl.key \
 	-subj "/C=PT/ST=Lisbon/L=Lisbon/ON=42Lisboa/CN=gade-alm.42.fr/"
 
-COPY index.html	/var/www/
-
 COPY conf/default.conf /etc/nginx/conf.d/nginx.conf
+
+COPY index.html /var/www/html
 
 EXPOSE 443
 
-# ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
+CMD [ "nginx", "-g", "daemon off;" ]
