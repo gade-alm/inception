@@ -1,9 +1,11 @@
 FROM debian:bullseye
 
-RUN apt-get update -y && apt-get upgrade -y && apt-get install -y mariadb-server
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y mariadb-server mariadb-client
 
-COPY conf/script.sh /etc/script.sh
+COPY script.sh /etc/script.sh
 
 RUN chmod +x /etc/script.sh
+
+RUN ./etc/script.sh
 
 EXPOSE 3306
