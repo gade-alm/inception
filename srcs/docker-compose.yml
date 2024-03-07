@@ -4,27 +4,32 @@ services:
     image: nginx
     build: ./srcs/requirements/nginx
     ports:
-      - "443:443"
+      - "443:80"
     volumes:
       - /var/www/html
     restart: on-failure
     networks:
       - inception
+    container_name: nginx
   maria-db:
     image: mariadb
     build: ./srcs/requirements/mariadb
-    restart: on-failure
     networks:
       - inception
+    container_name: mariadb
+    expose:
+      - "3306"
   wordpress:
     image: wordpress
     build: ./srcs/requirements/wordpress
-    ports:
-      - "9000:80"
+    expose:
+      - "9000"
     networks:
       - inception
     restart: on-failure
     volumes:
       - /var/www/html
+    container_name: wordpress
 networks:
   inception:
+    driver: bridge
