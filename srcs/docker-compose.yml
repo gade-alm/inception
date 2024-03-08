@@ -1,8 +1,8 @@
 version: "3.8"
 services:
   nginx:
-    image: nginx
-    build: ./srcs/requirements/nginx
+    image: nginx:ng1.0
+    build: ./requirements/nginx
     ports:
       - "443:80"
     volumes:
@@ -11,17 +11,28 @@ services:
     networks:
       - inception
     container_name: nginx
-  maria-db:
-    image: mariadb
-    build: ./srcs/requirements/mariadb
+    depends_on:
+      - wordpress
+  mariadb:
+    image: mariadb:md1.0
+    build: ./requirements/mariadb
     networks:
       - inception
     container_name: mariadb
     expose:
       - "3306"
+    volumes:
+      - /home/gade-alm/data
+    env_file:
+      - .env
+    environment:
+      SQL_DATABASE: ${SQL_DATABASE}
+      SQL_USER: ${SQL_USER}
+      SQL_PASSWORD: ${SQL_PASSWORD}
+      SQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
   wordpress:
-    image: wordpress
-    build: ./srcs/requirements/wordpress
+    image: wordpress:wp1.0
+    build: ./requirements/wordpress
     expose:
       - "9000"
     networks:
@@ -30,6 +41,14 @@ services:
     volumes:
       - /var/www/html
     container_name: wordpress
+    depends_on:
+      - mariadb
 networks:
   inception:
     driver: bridge
+volumes:
+  wordpress:
+    driver: local
+  mariadb:
+    driver: local
+  
