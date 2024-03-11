@@ -1,7 +1,7 @@
 all: up
 
 build:
-	docker compose -f srcs/docker-compose.yml up -d
+	docker compose -f srcs/docker-compose.yml --env-file srcs/.env up -d
 
 stop:
 	docker compose -f srcs/docker-compose.yml stop

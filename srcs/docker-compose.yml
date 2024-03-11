@@ -4,15 +4,17 @@ services:
     image: nginx:ng1.0
     build: ./requirements/nginx
     ports:
-      - "443:80"
+      - "443:443"
     volumes:
       - /var/www/html
     restart: on-failure
     networks:
       - inception
     container_name: nginx
-    depends_on:
-      - wordpress
+    env_file:
+      - path: .env
+        required: true
+
   mariadb:
     image: mariadb:md1.0
     build: ./requirements/mariadb
@@ -24,12 +26,11 @@ services:
     volumes:
       - /home/gade-alm/data
     env_file:
-      - .env
-    environment:
-      SQL_DATABASE: ${SQL_DATABASE}
-      SQL_USER: ${SQL_USER}
-      SQL_PASSWORD: ${SQL_PASSWORD}
-      SQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
+      - path: .env
+        required: true
+
+
+
   wordpress:
     image: wordpress:wp1.0
     build: ./requirements/wordpress
@@ -41,8 +42,11 @@ services:
     volumes:
       - /var/www/html
     container_name: wordpress
-    depends_on:
-      - mariadb
+    # depends_on:
+    #   mariadb:
+    #     condition: service_healthy
+
+
 networks:
   inception:
     driver: bridge
