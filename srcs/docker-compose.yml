@@ -12,7 +12,7 @@ services:
       - inception
     container_name: nginx
     env_file:
-      - path: .env
+      - path: /home/gabrieltorres/inception/srcs/.env
         required: true
 
   mariadb:
@@ -21,13 +21,20 @@ services:
     networks:
       - inception
     container_name: mariadb
+    restart: on-failure
     expose:
       - "3306"
     volumes:
       - /home/gade-alm/data
     env_file:
-      - path: .env
+      - path: /home/gabrieltorres/inception/srcs/.env
         required: true
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "--silent"]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+      start_period: 5s
 
 
 
@@ -38,13 +45,16 @@ services:
       - "9000"
     networks:
       - inception
-    restart: on-failure
+    # restart: on-failure
+    env_file:
+      - path: /home/gabrieltorres/inception/srcs/.env
+        required: true
     volumes:
       - /var/www/html
     container_name: wordpress
-    # depends_on:
-    #   mariadb:
-    #     condition: service_healthy
+    depends_on:
+      mariadb:
+        condition: service_healthy
 
 
 networks:
@@ -53,6 +63,10 @@ networks:
 volumes:
   wordpress:
     driver: local
+    driver_opts:
+      device: /home/gabrieltorres/data/wordpress
   mariadb:
     driver: local
+    driver_opts:
+      device: /home/gabrieltorres/data/mariadb
   

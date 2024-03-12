@@ -6,6 +6,6 @@ COPY script.sh /etc/script.sh
 
 RUN chmod +x /etc/script.sh
 
-RUN ./etc/script.sh
-
 EXPOSE 3306
+
+ENTRYPOINT ["/bin/bash", "./etc/script.sh"]
