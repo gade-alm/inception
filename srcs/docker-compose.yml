@@ -12,7 +12,7 @@ services:
       - inception
     container_name: nginx
     env_file:
-      - path: /home/gabrieltorres/inception/srcs/.env
+      - path: .env
         required: true
 
   mariadb:
@@ -27,7 +27,7 @@ services:
     volumes:
       - /home/gade-alm/data
     env_file:
-      - path: /home/gabrieltorres/inception/srcs/.env
+      - path: .env
         required: true
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "--silent"]
@@ -47,7 +47,7 @@ services:
       - inception
     # restart: on-failure
     env_file:
-      - path: /home/gabrieltorres/inception/srcs/.env
+      - path: .env
         required: true
     volumes:
       - /var/www/html

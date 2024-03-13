@@ -22,3 +22,5 @@ RUN chmod +x /etc/wp-cli-conf.sh
 EXPOSE 9000
 
 ENTRYPOINT ["./bin/bash", "./etc/wp-cli-conf.sh"]
+
+CMD [ "php-fpm7.4", "-F", "-R" ]
