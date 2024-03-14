@@ -25,7 +25,7 @@ services:
     expose:
       - "3306"
     volumes:
-      - /home/gade-alm/data
+      - /home/gabrieltorres/data
     env_file:
       - path: .env
         required: true
@@ -36,8 +36,6 @@ services:
       retries: 5
       start_period: 5s
 
-
-
   wordpress:
     image: wordpress:wp1.0
     build: ./requirements/wordpress
@@ -45,7 +43,7 @@ services:
       - "9000"
     networks:
       - inception
-    # restart: on-failure
+    restart: on-failure
     env_file:
       - path: .env
         required: true
@@ -56,9 +54,9 @@ services:
       mariadb:
         condition: service_healthy
 
-
 networks:
   inception:
+    name: inception
     driver: bridge
 volumes:
   wordpress:

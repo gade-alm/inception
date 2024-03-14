@@ -1,7 +1,7 @@
 all: build
 
 build:
-	docker compose -f srcs/docker-compose.yml --env-file srcs/.env up -d --build
+	docker compose -f srcs/docker-compose.yml --env-file srcs/.env up --build
 
 stop:
 	docker compose -f srcs/docker-compose.yml stop
@@ -11,7 +11,7 @@ remove:
 
 #only if need full reset
 fullremove:
-	docker system prune -a --volumes --force
 	docker compose -f srcs/docker-compose.yml down --rmi all --volumes
+	docker system prune -a --volumes --force
 
 re:
