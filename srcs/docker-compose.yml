@@ -6,14 +6,15 @@ services:
     ports:
       - "443:443"
     volumes:
-      - /var/www/html
+      - wordpress:/var/www/html
     restart: on-failure
     networks:
       - inception
     container_name: nginx
     env_file:
       - path: .env
-        required: true
+    depends_on:
+      - wordpress
 
   mariadb:
     image: mariadb:md1.0
@@ -23,12 +24,11 @@ services:
     container_name: mariadb
     restart: on-failure
     expose:
-      - "3306"
+      - "3306:3306"
     volumes:
-      - /home/gabrieltorres/data
+      - mariadb:/var/lib/mysql
     env_file:
       - path: .env
-        required: true
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "--silent"]
       interval: 5s
@@ -40,15 +40,14 @@ services:
     image: wordpress:wp1.0
     build: ./requirements/wordpress
     expose:
-      - "9000"
+      - "9000:9000"
     networks:
       - inception
     restart: on-failure
     env_file:
       - path: .env
-        required: true
     volumes:
-      - /var/www/html
+      - wordpress:/var/www/wordpress
     container_name: wordpress
     depends_on:
       mariadb:
@@ -58,13 +57,18 @@ networks:
   inception:
     name: inception
     driver: bridge
+  
 volumes:
   wordpress:
     driver: local
     driver_opts:
+      type: 'none'
+      o: 'bind'
       device: /home/gabrieltorres/data/wordpress
   mariadb:
     driver: local
     driver_opts:
+      type: 'none'
+      o: 'bind'
       device: /home/gabrieltorres/data/mariadb
   

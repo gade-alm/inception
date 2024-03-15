@@ -1,6 +1,6 @@
 FROM debian:bullseye
 
-RUN apt-get update -y && apt-get upgrade -y && apt-get install -y mariadb-server mariadb-client
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y mariadb-server
 
 COPY script.sh /etc/script.sh
 
