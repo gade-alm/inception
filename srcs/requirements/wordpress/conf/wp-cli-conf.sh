@@ -1,5 +1,7 @@
-#!/bin/bash	
-	
+#!/bin/bash
+
+if [ ! -f "/var/www/html/wp-config.php" ];
+then
 	cd /var/www/html && wp core download --allow-root
 	wp config create	--allow-root \
 											--dbname=$SQL_DATABASE \
@@ -13,5 +15,9 @@
 										--allow-root
 	wp user create $WORDPRESS_NEW_USER $WORDPRESS_NEW_EMAIL --user_pass=$WORDPRESS_NEW_PASS --allow-root
 	mkdir -p /run/php/
-	exec /usr/sbin/php-fpm7.4 -F -R
+else
+	echo "WP-CONFIG ALREADY CREATED!"
+fi
+
+exec /usr/sbin/php-fpm7.4 -F -R
 

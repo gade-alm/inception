@@ -11,8 +11,8 @@ remove:
 
 #only if need full reset
 fullremove:
-	sudo rm -rf /home/gabrieltorres/data/mariadb/*
-	sudo rm -rf /home/gabrieltorres/data/wordpress/*
+	sudo rm -rf /home/gade-alm/data/mariadb/*
+	sudo rm -rf /home/gade-alm/data/wordpress/*
 	docker compose -f srcs/docker-compose.yml down --rmi all --volumes
 	docker system prune -a --volumes --force
 
