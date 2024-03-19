@@ -10,6 +10,4 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -out /etc/nginx/ssl/ssl.
 
 COPY conf/default.conf /etc/nginx/conf.d/nginx.conf
 
-EXPOSE 443
-
 CMD [ "nginx", "-g", "daemon off;" ]

@@ -10,6 +10,5 @@ mysql -u root -e "FLUSH PRIVILEGES";
 
 mysqladmin -u root password "$SQL_PASSWORD"
 mysqladmin -u root -p"$SQL_ROOT_PASSWORD" shutdown
-# sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/mysql/mariadb.conf.d/50-server.cnf
 
-exec mysqld_safe --bind-address=0.0.0.0
+exec mysqld_safe --bind-address=*
