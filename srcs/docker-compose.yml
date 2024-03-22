@@ -12,7 +12,7 @@ services:
       - inception
     container_name: nginx
     env_file:
-      - path: .env
+      - path: /home/gade-alm/data/.env
     depends_on:
       - wordpress
 
@@ -28,7 +28,7 @@ services:
     volumes:
       - mariadb:/var/lib/mysql
     env_file:
-      - path: .env
+      - path: /home/gade-alm/data/.env
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "--silent"]
       interval: 5s
@@ -45,7 +45,7 @@ services:
       - inception
     restart: on-failure
     env_file:
-      - path: .env
+      - path: /home/gade-alm/data/.env
     volumes:
       - wordpress:/var/www/wordpress
     container_name: wordpress
