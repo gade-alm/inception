@@ -27,4 +27,4 @@ EXPOSE 9000
 
 ENTRYPOINT ["/etc/wp-cli-conf.sh"]
 
-# CMD [ "php-fpm7.4", "-F", "-R" ]
+
